@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Image, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, TextInput, TouchableOpacity } from 'react-native';
 
-export default function login() {
+export default function login({ navigation }) {
+
     return (
         <View style={styles.container}>
             <View style={styles.containerTop}>
@@ -13,16 +14,22 @@ export default function login() {
             </View>
             <View style={styles.containerMid}>
                 <Text style={styles.tituloCampo}>Email</Text>
-                <TextInput style={{ width: 200, borderRadius: 10, backgroundColor: "white", marginTop: 6, marginBottom: 3, }} />
+                <TextInput style={{ width: 200, borderRadius: 5, backgroundColor: "white", marginTop: 6, marginBottom: 3, }} />
                 <Text style={styles.tituloCampo}>Senha</Text>
-                <TextInput style={{ width: 200, borderRadius: 10, backgroundColor: "white", marginTop: 6 }} />
+                <TextInput style={{ width: 200, borderRadius: 5, backgroundColor: "white", marginTop: 6 }} />
             </View>
             <View style={styles.containerBottom}>
-                <Button
-                    title="Cadastre-se"
-                    style={styles.button}
+                <Button onPress={() => navigation.navigate('home')}
+                    title="Login"
+                    style={{ fontSize: 10 }}
                 />
-                <Text style={styles.jaTemConta}>Já tem uma conta? Entre Aqui </Text>
+                <View style={styles.jaTemConta}>
+                    <Text style={styles.jaTemConta}>Ainda não tem conta?
+                </Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('cadastro')}>
+                        <Text style={styles.entreAqui}> Crie aqui! </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
             <StatusBar style="auto" />
         </View>
@@ -65,10 +72,18 @@ const styles = StyleSheet.create({
         fontSize: 17,
     },
     jaTemConta: {
-        marginTop: "5%",
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: 5,
         fontSize: 18,
         fontWeight: "500",
-        marginLeft: 27
+        flexDirection: "row"
+    },
+    entreAqui: {
+        marginTop: 5,
+        fontSize: 18,
+        fontWeight: "500",
+        flexDirection: "row"
     },
     image: {
         resizeMode: "contain",

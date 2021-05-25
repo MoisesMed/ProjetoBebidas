@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Image, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, TextInput, TouchableOpacity } from 'react-native';
 
-export default function cadastro() {
+export default function cadastro({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.containerTop}>
@@ -21,9 +21,16 @@ export default function cadastro() {
             </View>
             <View style={styles.containerBottom}>
                 <Button
-                    title="Cadastre-se"
+                    title="Cadastro"
+                    style={{ fontSize: 10 }}
                 />
-                <Text style={styles.jaTemConta}>Já tem uma conta? Entre Aqui </Text>
+                <View style={styles.jaTemConta}>
+                    <Text style={styles.jaTemConta}>Ja tem conta?
+                </Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('home')}>
+                        <Text style={styles.entreAqui}> Entre aqui! </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
             <StatusBar style="auto" />
         </View>
@@ -35,24 +42,29 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#F5F5F5",
         alignItems: "center",
+        padding: 50
     },
     containerTop: {
         marginTop: 30,
         flex: 3,
         alignItems: "center",
         justifyContent: "center",
+        marginBottom: -30
     },
     containerMid: {
+        marginTop: 30,
         padding: 10,
         flex: 2,
-        marginBottom: 10
+        marginBottom: 65
     },
     containerBottom: {
+        width: 300,
         flex: 2,
         marginTop: 25,
-        marginBottom: -50
+        marginBottom: -50,
     },
     titulo: {
+        marginTop: 10,
         marginBottom: 30,
         fontSize: 25,
         fontWeight: "bold",
@@ -63,13 +75,22 @@ const styles = StyleSheet.create({
         fontSize: 17,
     },
     jaTemConta: {
-        marginTop: "5%",
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: 5,
         fontSize: 18,
         fontWeight: "500",
+        flexDirection: "row"
+    },
+    entreAqui: {
+        marginTop: 5,
+        fontSize: 18,
+        fontWeight: "500",
+        flexDirection: "row"
     },
     image: {
         resizeMode: "contain",
         width: 200,
         height: 200,
-    }
+    },
 });
