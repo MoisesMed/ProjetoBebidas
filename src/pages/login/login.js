@@ -9,7 +9,7 @@ export default function login({ navigation }) {
             <View style={styles.containerTop}>
                 <Image
                     style={styles.image}
-                    source={require('../../../assets/logo.jpeg')} />
+                    source={require('../../../assets/logo.png')} />
                 <Text style={styles.titulo}>Login</Text>
             </View>
             <View style={styles.containerMid}>

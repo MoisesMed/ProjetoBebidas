@@ -8,7 +8,7 @@ export default function cadastro({ navigation }) {
             <View style={styles.containerTop}>
                 <Image
                     style={styles.image}
-                    source={require('../../../assets/logo.jpeg')} />
+                    source={require('../../../assets/logo.png')} />
                 <Text style={styles.titulo}>Cadastro</Text>
             </View>
             <View style={styles.containerMid}>
@@ -20,14 +20,14 @@ export default function cadastro({ navigation }) {
                 <TextInput style={{ width: 200, borderRadius: 10, backgroundColor: "white", marginTop: 6 }} />
             </View>
             <View style={styles.containerBottom}>
-                <Button
+                <Button onPress={() => navigation.navigate('home')}
                     title="Cadastro"
                     style={{ fontSize: 10 }}
                 />
                 <View style={styles.jaTemConta}>
                     <Text style={styles.jaTemConta}>Ja tem conta?
                 </Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('home')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('catalogo')}>
                         <Text style={styles.entreAqui}> Entre aqui! </Text>
                     </TouchableOpacity>
                 </View>

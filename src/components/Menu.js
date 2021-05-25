@@ -38,14 +38,15 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "flex-end",
         justifyContent: "center",
+        width: "100%",
         bottom: 0
     },
     menuButton: {
+        width: "25%",
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#87CEFA",
         height: 60,
-        width: 100,
         borderWidth: 1,
         borderColor: "black"
     },

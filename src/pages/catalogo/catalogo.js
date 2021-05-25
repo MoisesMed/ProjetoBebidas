@@ -132,7 +132,7 @@ export default function catalogo({ navigation }) {
                     style={{ borderBottomColor: "black", borderWidth: 1, borderTopColor: "#F5F5F5", borderLeftColor: "#F5F5F5", borderRightColor: "#F5F5F5", paddingBottom: 25 }}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}>
-                    {arrayPetisco.map((e, i) => (
+                    {arraySemAlcool.map((e, i) => (
                         <View key={i}>
                             <Image source={{ uri: (e.img) }}
                                 style={styles.image} />
@@ -144,7 +144,7 @@ export default function catalogo({ navigation }) {
                     style={{ borderBottomColor: "black", borderWidth: 1, borderTopColor: "#F5F5F5", borderLeftColor: "#F5F5F5", borderRightColor: "#F5F5F5", paddingBottom: 25 }}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}>
-                    {arrayCerveja.map((e, i) => (
+                    {arrayPetisco.map((e, i) => (
                         <View key={i}>
                             <Image source={{ uri: (e.img) }}
                                 style={styles.image} />

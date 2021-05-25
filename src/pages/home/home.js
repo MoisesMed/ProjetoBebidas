@@ -14,7 +14,7 @@ export default function home({ navigation }) {
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}>
                     <Image
-                        source={require('../../../assets/logo.jpeg')} style={styles.image} />
+                        source={require('../../../assets/logo.png')} style={styles.image} />
                 </ScrollView>
             </View>
             <Menu />
