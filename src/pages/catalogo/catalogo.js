@@ -88,66 +88,76 @@ export default function catalogo({ navigation }) {
     return (
         <ScrollView>
             <View style={styles.container}>
-                <Text style={{ fontSize: 30, fontWeight: 'bold', marginTop: 30, marginBottom: 20 }}>Delivery de bebidas!</Text>
+                <Text style={{ fontSize: 30, fontWeight: 'bold', marginTop: 40, marginBottom: 5 }}>Delivery de Bebidas</Text>
                 <Text style={styles.title}>Cervejas</Text>
                 <ScrollView
-                    style={{ borderBottomColor: "black", borderWidth: 1, borderTopColor: "#F5F5F5", borderLeftColor: "#F5F5F5", borderRightColor: "#F5F5F5", paddingBottom: 25 }}
+                    style={styles.divisoria}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}>
                     {arrayCerveja.map((e, i) => (
-                        <View key={i}>
+                        <View key={i} style={{ alignItems: 'center' }}>
                             <Image source={{ uri: (e.img) }}
                                 style={styles.image} />
+                            <Text style={styles.nome}>Nome</Text>
+                            <Text style={styles.preco}>Preço R$</Text>
                         </View>
                     ))}
                 </ScrollView>
 
                 <Text style={styles.title}>Destilados</Text>
                 <ScrollView
-                    style={{ borderBottomColor: "black", borderWidth: 1, borderTopColor: "#F5F5F5", borderLeftColor: "#F5F5F5", borderRightColor: "#F5F5F5", paddingBottom: 25 }}
+                    style={styles.divisoria}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}>
                     {arrayDestilados.map((e, i) => (
-                        <View key={i}>
+                        <View key={i} style={{ alignItems: 'center' }}>
                             <Image source={{ uri: (e.img) }}
                                 style={styles.image} />
+                            <Text style={styles.nome}>Nome</Text>
+                            <Text style={styles.preco}>Preço R$</Text>
                         </View>
                     ))}
                 </ScrollView>
                 <Text style={styles.title}>Vinhos</Text>
                 <ScrollView
-                    style={{ borderBottomColor: "black", borderWidth: 1, borderTopColor: "#F5F5F5", borderLeftColor: "#F5F5F5", borderRightColor: "#F5F5F5", paddingBottom: 25 }}
+                    style={styles.divisoria}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}>
                     {arrayVinho.map((e, i) => (
-                        <View key={i}>
+                        <View key={i} style={{ alignItems: 'center' }}>
                             <Image source={{ uri: (e.img) }}
                                 style={styles.image} />
+                            <Text style={styles.nome}>Nome</Text>
+                            <Text style={styles.preco}>Preço R$</Text>
                         </View>
                     ))}
                 </ScrollView >
 
                 <Text style={styles.title}>Sem Álcool</Text>
                 <ScrollView
-                    style={{ borderBottomColor: "black", borderWidth: 1, borderTopColor: "#F5F5F5", borderLeftColor: "#F5F5F5", borderRightColor: "#F5F5F5", paddingBottom: 25 }}
+                    style={styles.divisoria}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}>
                     {arraySemAlcool.map((e, i) => (
-                        <View key={i}>
+                        <View key={i} style={{ alignItems: 'center' }}>
                             <Image source={{ uri: (e.img) }}
                                 style={styles.image} />
+                            <Text style={styles.nome}>Nome</Text>
+                            <Text style={styles.preco}>Preço R$</Text>
                         </View>
                     ))}
                 </ScrollView>
                 <Text style={styles.title}>Petiscos</Text>
                 <ScrollView
-                    style={{ borderBottomColor: "black", borderWidth: 1, borderTopColor: "#F5F5F5", borderLeftColor: "#F5F5F5", borderRightColor: "#F5F5F5", paddingBottom: 25 }}
+                    style={styles.divisoria}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}>
                     {arrayPetisco.map((e, i) => (
-                        <View key={i}>
+                        <View key={i} style={{ alignItems: 'center' }}>
                             <Image source={{ uri: (e.img) }}
                                 style={styles.image} />
+                            <Text style={styles.nome}>Nome</Text>
+                            <Text style={styles.preco}>Preço R$</Text>
                         </View>
                     ))}
                 </ScrollView>
@@ -160,21 +170,44 @@ export default function catalogo({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#F5F5F5",
+        backgroundColor: "#FFF",
         alignItems: "center",
-        padding: 20
+        padding: 2
     },
     image: {
         width: 100,
         height: 100,
         marginRight: 15,
         borderRadius: 500,
+        borderWidth: 0.5,
+        backgroundColor: "black",
+        borderColor: "black",
         padding: 5
     },
     title: {
-        marginTop: 10,
-        paddingBottom: 8,
+        backgroundColor: "white",
+        borderRadius: 50,
+        padding: 7,
+        marginBottom: 10,
+        color: "#FF8C00",
+        marginTop: 20,
         fontSize: 28,
+    },
+    nome: {
+        paddingRight: 17,
+        fontSize: 18
+    },
+    preco: {
+        paddingRight: 15,
+        fontSize: 15
+    },
+    divisoria: {
+        // borderBottomColor: "#0000FF",
+        borderWidth: 2,
+        // borderTopColor: "#ADD8E6",
+        // borderLeftColor: "#ADD8E6",
+        // borderRightColor: "#ADD8E6",
+        padding: 5,
     }
 
 });

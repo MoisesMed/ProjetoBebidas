@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
         padding: 50
     },
     containerTop: {
-        marginTop: 30,
         flex: 3,
         alignItems: "center",
         justifyContent: "center",
@@ -64,7 +63,7 @@ const styles = StyleSheet.create({
         marginBottom: -50,
     },
     titulo: {
-        marginTop: 10,
+        marginTop: -25,
         marginBottom: 30,
         fontSize: 25,
         fontWeight: "bold",
@@ -83,6 +82,7 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     },
     entreAqui: {
+        color: "blue",
         marginTop: 5,
         fontSize: 18,
         fontWeight: "500",
