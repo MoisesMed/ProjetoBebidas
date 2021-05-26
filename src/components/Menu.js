@@ -1,14 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import cadastro from '../pages/cadastro/cadastro';
-import login from '../pages/login/login';
-import home from '../pages/home/home';
-import catalogo from '../pages/catalogo/catalogo';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 
-export default function Menu(navigation) {
+export default function Menu(props) {
+    const { navigation } = props
     return (
         <View style={styles.container}>
             <View style={styles.menu}>
@@ -33,7 +28,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#F5F5F5",
-    }, menu: {
+    },
+    menu: {
         flex: 1,
         flexDirection: "row",
         alignItems: "flex-end",

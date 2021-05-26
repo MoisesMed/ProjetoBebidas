@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Image, Text, ScrollView } from 'react-native';
 import Menu from '../../components/Menu'
 
-export default function catalogo({ navigation }) {
+export default function catalogo(props) {
     const arrayCerveja = [{ img: 'https://courier-images-prod.imgix.net/produc_variant/00008729_e095d6d8-7491-458c-8225-1ee8e9b76d27.jpg?auto=compress,format&fit=max&w=undefined&h=200&dpr=2' },
     { img: 'https://courier-images-prod.imgix.net/produc_variant/00008725_c431fbf8-5f01-4a90-aaa1-a06cff9306e8.jpg?auto=compress,format&fit=max&w=undefined&h=200&dpr=2' },
     { img: 'https://courier-images-prod.imgix.net/produc_variant/00008779_0a26ce5b-9e63-4c29-8cc0-d20099d4ae3d.jpg?auto=compress,format&fit=max&w=undefined&h=200&dpr=2' },
@@ -161,7 +161,7 @@ export default function catalogo({ navigation }) {
                         </View>
                     ))}
                 </ScrollView>
-                <Menu />
+                <Menu {...props} />
             </View >
         </ScrollView>
     );
