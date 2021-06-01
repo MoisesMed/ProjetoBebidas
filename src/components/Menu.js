@@ -13,7 +13,7 @@ export default function Menu(props) {
                 <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('catalogo')}>
                     <Text > Catalogo </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('home')}>
+                <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('carrinho')}>
                     <Text > Pedido </Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('home')}>

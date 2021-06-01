@@ -6,6 +6,10 @@ export default function cadastro({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.containerTop}>
+                <Button onPress={() => navigation.navigate('produto')}
+                    title="produto"
+                    style={{ fontSize: 10 }}
+                />
                 <Image
                     style={styles.image}
                     source={require('../../../assets/logo.png')} />

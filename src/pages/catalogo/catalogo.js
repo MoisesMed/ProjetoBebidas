@@ -1,8 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, Image, Text, ScrollView } from 'react-native';
+import { StyleSheet, View, Image, Text, ScrollView, TouchableOpacity } from 'react-native';
 import Menu from '../../components/Menu'
+import produto from '../produto/produto'
 
 export default function catalogo(props) {
+    const { navigation } = props
     const arrayCerveja = [{ img: 'https://courier-images-prod.imgix.net/produc_variant/00008729_e095d6d8-7491-458c-8225-1ee8e9b76d27.jpg?auto=compress,format&fit=max&w=undefined&h=200&dpr=2' },
     { img: 'https://courier-images-prod.imgix.net/produc_variant/00008725_c431fbf8-5f01-4a90-aaa1-a06cff9306e8.jpg?auto=compress,format&fit=max&w=undefined&h=200&dpr=2' },
     { img: 'https://courier-images-prod.imgix.net/produc_variant/00008779_0a26ce5b-9e63-4c29-8cc0-d20099d4ae3d.jpg?auto=compress,format&fit=max&w=undefined&h=200&dpr=2' },
@@ -96,10 +98,12 @@ export default function catalogo(props) {
                     showsHorizontalScrollIndicator={false}>
                     {arrayCerveja.map((e, i) => (
                         <View key={i} style={{ alignItems: 'center' }}>
-                            <Image source={{ uri: (e.img) }}
-                                style={styles.image} />
-                            <Text style={styles.nome}>Nome</Text>
-                            <Text style={styles.preco}>Preço R$</Text>
+                            <TouchableOpacity onPress={() => navigation.navigate('produto')}>
+                                <Image source={{ uri: (e.img) }}
+                                    style={styles.image} />
+                                <Text style={styles.nome}>Nome</Text>
+                                <Text style={styles.preco}>Preço R$</Text>
+                            </TouchableOpacity>
                         </View>
                     ))}
                 </ScrollView>
@@ -110,12 +114,12 @@ export default function catalogo(props) {
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}>
                     {arrayDestilados.map((e, i) => (
-                        <View key={i} style={{ alignItems: 'center' }}>
+                        <TouchableOpacity onPress={() => navigation.navigate('produto')}>
                             <Image source={{ uri: (e.img) }}
                                 style={styles.image} />
                             <Text style={styles.nome}>Nome</Text>
                             <Text style={styles.preco}>Preço R$</Text>
-                        </View>
+                        </TouchableOpacity>
                     ))}
                 </ScrollView>
                 <Text style={styles.title}>Vinhos</Text>
@@ -124,12 +128,12 @@ export default function catalogo(props) {
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}>
                     {arrayVinho.map((e, i) => (
-                        <View key={i} style={{ alignItems: 'center' }}>
+                        <TouchableOpacity onPress={() => navigation.navigate('produto')}>
                             <Image source={{ uri: (e.img) }}
                                 style={styles.image} />
                             <Text style={styles.nome}>Nome</Text>
                             <Text style={styles.preco}>Preço R$</Text>
-                        </View>
+                        </TouchableOpacity>
                     ))}
                 </ScrollView >
 
@@ -139,12 +143,12 @@ export default function catalogo(props) {
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}>
                     {arraySemAlcool.map((e, i) => (
-                        <View key={i} style={{ alignItems: 'center' }}>
+                        <TouchableOpacity onPress={() => navigation.navigate('produto')}>
                             <Image source={{ uri: (e.img) }}
                                 style={styles.image} />
                             <Text style={styles.nome}>Nome</Text>
                             <Text style={styles.preco}>Preço R$</Text>
-                        </View>
+                        </TouchableOpacity>
                     ))}
                 </ScrollView>
                 <Text style={styles.title}>Petiscos</Text>
@@ -153,12 +157,12 @@ export default function catalogo(props) {
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}>
                     {arrayPetisco.map((e, i) => (
-                        <View key={i} style={{ alignItems: 'center' }}>
+                        <TouchableOpacity onPress={() => navigation.navigate('produto')}>
                             <Image source={{ uri: (e.img) }}
                                 style={styles.image} />
                             <Text style={styles.nome}>Nome</Text>
                             <Text style={styles.preco}>Preço R$</Text>
-                        </View>
+                        </TouchableOpacity>
                     ))}
                 </ScrollView>
                 <Menu {...props} />
@@ -172,7 +176,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#FFF",
         alignItems: "center",
-        padding: 2
+        padding: 2,
     },
     image: {
         width: 100,
