@@ -1,8 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, Button, TextInput, TouchableOpacity } from 'react-native';
+import auth from '@react-native-firebase/auth';
+//import firebase from '@react-native-firebase';
 
 export default function login({ navigation }) {
+ 
+    const [email, onChangeEmail] = React.useState(null);
+    const [password, onChangePassword] = React.useState(null);
+    const [autenticado, onChangeAutenticado] = React.useState(false);
+      
+     async function login() {
+        //const { email, password } = this.state;
+        try{
+            const user = await auth().signInWithEmailAndPassword(email,password);
+            //this.setState({autenticado: true});
+            console.log(user);
+            navigation.navigate('home');
+        }   catch(erro){
+            console.log(erro);
+        }  
+      }
 
     return (
         <View style={styles.container}>
@@ -14,12 +32,12 @@ export default function login({ navigation }) {
             </View>
             <View style={styles.containerMid}>
                 <Text style={styles.tituloCampo}>Email</Text>
-                <TextInput style={{ width: 200, borderRadius: 5, backgroundColor: "white", marginTop: 6, marginBottom: 3, }} />
+                <TextInput style={{ width: 200, borderRadius: 5, backgroundColor: "white", marginTop: 6, marginBottom: 3, }} value={email} onChangeText={onChangeEmail}  />
                 <Text style={styles.tituloCampo}>Senha</Text>
-                <TextInput style={{ width: 200, borderRadius: 5, backgroundColor: "white", marginTop: 6 }} />
+                <TextInput style={{ width: 200, borderRadius: 5, backgroundColor: "white", marginTop: 6 }} value={password} onChangeText={onChangePassword} />
             </View>
             <View style={styles.containerBottom}>
-                <Button onPress={() => navigation.navigate('home')}
+                <Button onPress={() => login()} //{() => navigation.navigate('home')}
                     title="Login"
                     style={{ fontSize: 10 }}
                 />

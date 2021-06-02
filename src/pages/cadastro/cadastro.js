@@ -3,8 +3,37 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, Button, TextInput, TouchableOpacity } from 'react-native';
 
 export default function cadastro({ navigation }) {
+    
+    const [email, onChangeEmail] = React.useState(null);
+    const [password, onChangePassword] = React.useState(null);
+    
+    const showToast = (mensagem) => {
+        ToastAndroid.showWithGravity(mensagem, ToastAndroid.SHORT,ToastAndroid.CENTER);
+      };
+
+    async function CriarConta() {
+            auth().createUserWithEmailAndPassword(email,password)
+            .then(()=> {
+                console.log("Conta Criada!");
+                showToast("Conta Criada!");
+                navigation.navigate('home');
+            })
+            .catch(erro => {
+                if (erro.code === "auth/email-already-in-use"){
+                    console.log("E-mail já está em uso");
+                    showToast("E-mail já está em uso");
+                }
+                if (erro.code === "auth/invalid-email"){
+                    console.log("E-mail inválido");
+                    showToast("E-mail inválido");
+                }
+                console.log(erro); 
+            })
+    }
+    
     return (
-        <View style={styles.container}>
+
+   <View style={styles.container}>
             <View style={styles.containerTop}>
                 <Button onPress={() => navigation.navigate('produto')}
                     title="produto"
@@ -19,12 +48,12 @@ export default function cadastro({ navigation }) {
                 <Text style={styles.tituloCampo}>Nome</Text>
                 <TextInput style={{ width: 200, borderRadius: 10, backgroundColor: "white", marginTop: 6, marginBottom: 3, }} />
                 <Text style={styles.tituloCampo}>Email</Text>
-                <TextInput style={{ width: 200, borderRadius: 10, backgroundColor: "white", marginTop: 6, marginBottom: 3, }} />
+                <TextInput style={{ width: 200, borderRadius: 10, backgroundColor: "white", marginTop: 6, marginBottom: 3, }}value={email} onChangeText={onChangeEmail} />
                 <Text style={styles.tituloCampo}>Senha</Text>
-                <TextInput style={{ width: 200, borderRadius: 10, backgroundColor: "white", marginTop: 6 }} />
+                <TextInput style={{ width: 200, borderRadius: 10, backgroundColor: "white", marginTop: 6 }}value={password} onChangeText={onChangePassword}  />
             </View>
             <View style={styles.containerBottom}>
-                <Button onPress={() => navigation.navigate('home')}
+                <Button onPress={() => CriarConta()}
                     title="Cadastro"
                     style={{ fontSize: 10 }}
                 />

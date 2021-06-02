@@ -5,6 +5,33 @@ import Menu from '../../components/Menu'
 
 export default function carrinho(props) {
 
+
+   /* const state = {
+        dados:{
+            logradouro:''
+        }
+    }*/
+    //const [dados = {logradouro:''},onChangeDados] = React.useState({logradouro:''});
+    const [cep, onChangeCep] = React.useState(null);
+    const [dados,onChangeDados] = React.useState({"bairro": "Messejana", "cep": "60842-250", "complemento": "", "ddd": "85", "gia": "", "ibge": "2304400", "localidade": "Fortaleza", "logradouro": "Rua Paulo Setubal", "siafi": "1389", "uf": "CE"});
+    const [logradouro,onChangeLogradouro] = React.useState('');
+
+    async function buscarCEP() {
+       fetch(`https://viacep.com.br/ws/${cep}/json`)
+       .then(resposta => resposta.json()) 
+       .then(data =>{
+           console.log(data);
+           onChangeDados(data);
+           console.log(dados);
+           onChangeLogradouro(dados.logradouro);
+           console.log(dados.logradouro);
+       } )
+       //.then(data => {React.setState({dados: data})})
+       .catch(erro =>{console.log(erro)})
+      };
+
+
+
     const arrayPedido = [{
         img: 'https://prod.liveshare.vsengsaas.visualstudio.com/join?56B7954FB7DAD0EB054FA27C1E1A22580430',
         nome: 'heineken',
@@ -40,11 +67,14 @@ export default function carrinho(props) {
             <View style={styles.boxForm}>
                 <Text style={{ marginLeft: 15 }}>CEP</Text>
                 <View style={{ flexDirection: 'row', marginBottom: 5, }}>
-                    <TextInput style={{ marginLeft: 15, backgroundColor: 'white', width: 100, borderColor: '#4EBFFF' }}></TextInput>
-                    <TouchableOpacity style={{ marginLeft: 15, backgroundColor: '#4EBFFF', width: 110, justifyContent: 'center', alignItems: 'center' }}><Text>Consultar CEP</Text></TouchableOpacity>
+                    <TextInput style={{ marginLeft: 15, backgroundColor: 'white', width: 100, borderColor: '#4EBFFF' }}value={cep} onChangeText={onChangeCep}></TextInput>
+                    <TouchableOpacity style={{ marginLeft: 15, backgroundColor: '#4EBFFF', width: 110, justifyContent: 'center', alignItems: 'center' }}
+                     onPress={() => buscarCEP()}>
+                    <Text>Consultar CEP</Text>
+                    </TouchableOpacity>
                 </View>
-                <Text style={{ marginLeft: 15 }}>Logradouro</Text>
-                <TextInput style={styles.Entradas}></TextInput>
+                <Text style={{ marginLeft: 15 }}  >Logradouro</Text>
+                <TextInput style={styles.Entradas}value={logradouro} onChangeText={onChangeLogradouro}></TextInput>
                 <Text style={{ marginLeft: 15 }}>Bairro</Text>
                 <TextInput style={styles.Entradas}></TextInput>
                 <Text style={{ marginLeft: 15, marginBottom: 5 }}>Numero</Text>
