@@ -1,36 +1,78 @@
 import React from 'react';
-import { Text, View, TextInput, ScrollView, TouchableOpacity, Button, Image } from 'react-native';
-import styles from './styleCarrinho';
-import Menu from '../../components/Menu'
-
-export default function carrinho(props) {
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
 
-   /* const state = {
-        dados:{
-            logradouro:''
-        }
-    }*/
-    //const [dados = {logradouro:''},onChangeDados] = React.useState({logradouro:''});
-    const [cep, onChangeCep] = React.useState(null);
-    const [dados,onChangeDados] = React.useState({"bairro": "Messejana", "cep": "60842-250", "complemento": "", "ddd": "85", "gia": "", "ibge": "2304400", "localidade": "Fortaleza", "logradouro": "Rua Paulo Setubal", "siafi": "1389", "uf": "CE"});
-    const [logradouro,onChangeLogradouro] = React.useState('');
+class HomeScreen extends React.Component {
 
-    async function buscarCEP() {
-       fetch(`https://viacep.com.br/ws/${cep}/json`)
-       .then(resposta => resposta.json()) 
-       .then(data =>{
-           console.log(data);
-           onChangeDados(data);
-           console.log(dados);
-           onChangeLogradouro(dados.logradouro);
-           console.log(dados.logradouro);
-       } )
-       //.then(data => {React.setState({dados: data})})
-       .catch(erro =>{console.log(erro)})
-      };
+  constructor(props) {
+    super(props)
 
+    this.state = {
+        cep: '',
+        dados: {},
+        logradouro: '',
+        bairro: '',
+        complemento: '',
+        numero: ''
+    }
+}
 
+buscarCEP = () => {
+  this.setState({logradouro: ''});
+  this.setState({bairro: ''});
+  this.setState({complemento: ''});
+  this.setState({numero: ''});
+
+  fetch(`https://viacep.com.br/ws/${this.state.cep}/json`)
+  .then(resposta => resposta.json()) 
+  .then(data =>{
+      console.log(data);
+      this.setState({dados: data})
+      this.setState({logradouro: data.logradouro});
+      this.setState({bairro: data.bairro});
+      this.setState({complemento: data.complemento});
+  })
+  .catch(erro =>{console.log(erro)})
+ };
+  render() {
+    return (
+      <View style={styles.boxForm}>
+                <Text style={{ marginLeft: 15 }}>CEP</Text>
+                <View style={{ flexDirection: 'row', marginBottom: 5, }}>
+                    <TextInput style={{ marginLeft: 15, backgroundColor: 'white', width: 100, borderColor: '#4EBFFF' }}value={this.state.cep} onChangeText={cep => {this.setState({cep})}}></TextInput>
+                    <TouchableOpacity style={{ marginLeft: 15, backgroundColor: '#4EBFFF', width: 110, justifyContent: 'center', alignItems: 'center' }}
+                     onPress={this.buscarCEP}>
+                    <Text>Consultar CEP</Text>
+                    </TouchableOpacity>
+                </View>
+                <Text style={{ marginLeft: 15 }} >Logradouro</Text>
+                <TextInput style={styles.Entradas} value={this.state.logradouro} onChangeText={logradouro => {this.setState({logradouro})}}></TextInput>
+                <Text style={{ marginLeft: 15 }}>Bairro</Text>
+                <TextInput style={styles.Entradas} value={this.state.bairro} onChangeText={bairro => {this.setState({bairro})}}></TextInput>
+                <Text style={{ marginLeft: 15, marginBottom: 5 }}>Numero</Text>
+                <TextInput style={{ marginLeft: 15, backgroundColor: 'white', width: 100, borderColor: '#4EBFFF', marginBottom: 5 }} value={this.state.numero} onChangeText={logradouro => {this.setState({numero})}}></TextInput>
+                <Text style={{ marginLeft: 15 }}>Complemento</Text>
+                <TextInput style={styles.Entradas} value={this.state.complemento} onChangeText={complemento => {this.setState({complemento})}}></TextInput>
+                <View>
+
+                </View>
+            </View> 
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
+export default HomeScreen;
+
+/*export default function carrinho(props) {
 
     const arrayPedido = [{
         img: 'https://prod.liveshare.vsengsaas.visualstudio.com/join?56B7954FB7DAD0EB054FA27C1E1A22580430',
@@ -106,4 +148,4 @@ export default function carrinho(props) {
             <Menu {...props} />
         </View>
     );
-}
+}*/
