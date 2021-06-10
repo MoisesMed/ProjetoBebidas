@@ -7,7 +7,11 @@ npm-debug.*
 *.key
 *.mobileprovision
 *.orig.*
+*.ios
+*.android
 web-build/
+.expo-shared
+.idea
 
 # macOS
 .DS_Store
