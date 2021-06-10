@@ -24,7 +24,7 @@ export default function App() {
         <Stack.Screen name="catalogo" component={catalogo} />
         <Stack.Screen name="produto" component={produto} />
         <Stack.Screen name="carrinho" component={carrinho} />
-      </Stack.Navigator>
+        </Stack.Navigator>
     </NavigationContainer>
   );
 }

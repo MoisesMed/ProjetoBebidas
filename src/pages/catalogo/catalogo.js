@@ -2,10 +2,93 @@ import React from 'react';
 import { StyleSheet, View, Image, Text, ScrollView, TouchableOpacity } from 'react-native';
 import Menu from '../../components/Menu'
 import produto from '../produto/produto'
+import firestore from '@react-native-firebase/firestore';
 
-export default function catalogo(props) {
-    const { navigation } = props
-    const arrayCerveja = [{ img: 'https://courier-images-prod.imgix.net/produc_variant/00008729_e095d6d8-7491-458c-8225-1ee8e9b76d27.jpg?auto=compress,format&fit=max&w=undefined&h=200&dpr=2' },
+class catalogo extends React.Component {
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            ID_DESTILADO: 'hCpX8LpiTPU5X7GxO0tT',
+            ID_VINHO: 'MWR0GEyfT69uK1Pm78dJ',
+            ID_CERVEJA: 'NAVTu6Hznb2qnGuNu5ut',
+            ID_PETISCOS: 'VQlROCZQvcQTGcwwte85',
+            ID_SEM_ALCOOL: 'cNXaHAfMpb0iaEldMWrg',
+            arrayDestilados: [],
+            arrayVinho: [],
+            arrayCerveja: [],
+            arrayPetisco: [],
+            arraySemAlcool: []
+        }
+        this.obterCatalogo();
+    }
+
+    async obterCatalogo() {
+        const arrDestilados = [];
+        const arrVinho = [];
+        const arrCerveja = [];
+        const arrPetisco = [];
+        const arrSemAlcool = [];
+
+        await firestore().collection("produto").get()
+            .then(querySnapshot => {
+                querySnapshot.docs.forEach(doc => {
+                    switch (doc.data().categoria.id) {
+                        case this.state.ID_DESTILADO:
+                            arrDestilados.push({
+                                'descricao': doc.data().descricao,
+                                'detalhe': doc.data().detalhe,
+                                'resumo': doc.data().resumo,
+                                'preco': doc.data().preco,
+                                'imagem': doc.data().imagem
+                            });
+                            break;
+                        case this.state.ID_VINHO:
+                            arrVinho.push({
+                                'descricao': doc.data().descricao,
+                                'detalhe': doc.data().detalhe,
+                                'resumo': doc.data().resumo,
+                                'preco': doc.data().preco,
+                                'imagem': doc.data().imagem
+                            });
+                            break;
+                        case this.state.ID_CERVEJA:
+                            arrCerveja.push({
+                                'descricao': doc.data().descricao,
+                                'detalhe': doc.data().detalhe,
+                                'resumo': doc.data().resumo,
+                                'preco': doc.data().preco,
+                                'imagem': doc.data().imagem
+                            });
+                            break;
+                        case this.state.ID_PETISCOS:
+                            arrPetisco.push({
+                                'descricao': doc.data().descricao,
+                                'detalhe': doc.data().detalhe,
+                                'resumo': doc.data().resumo,
+                                'preco': doc.data().preco,
+                                'imagem': doc.data().imagem
+                            });
+                            break;
+                        case this.state.ID_SEM_ALCOOL:
+                            arrSemAlcool.push({
+                                'descricao': doc.data().descricao,
+                                'detalhe': doc.data().detalhe,
+                                'resumo': doc.data().resumo,
+                                'preco': doc.data().preco,
+                                'imagem': doc.data().imagem
+                            });
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            });
+        this.setState({ arrayDestilados: arrDestilados });
+    }
+    // const { navigation } = props
+    arrayCerveja = [{ img: 'https://courier-images-prod.imgix.net/produc_variant/00008729_e095d6d8-7491-458c-8225-1ee8e9b76d27.jpg?auto=compress,format&fit=max&w=undefined&h=200&dpr=2' },
     { img: 'https://courier-images-prod.imgix.net/produc_variant/00008725_c431fbf8-5f01-4a90-aaa1-a06cff9306e8.jpg?auto=compress,format&fit=max&w=undefined&h=200&dpr=2' },
     { img: 'https://courier-images-prod.imgix.net/produc_variant/00008779_0a26ce5b-9e63-4c29-8cc0-d20099d4ae3d.jpg?auto=compress,format&fit=max&w=undefined&h=200&dpr=2' },
     { img: 'https://courier-images-prod.imgix.net/produc_variant/00008735_59b64bbf-c11a-4575-a15c-db7c31080461.jpg?auto=compress,format&fit=max&w=undefined&h=200&dpr=2' },
@@ -15,34 +98,34 @@ export default function catalogo(props) {
     { img: 'https://courier-images-prod.imgix.net/produc_variant/00009870_d8874dd1-eaac-4d61-9528-4746cf573314.jpg?auto=compress,format&fit=max&w=undefined&h=200&dpr=2' }
     ]
 
-    const arrayDestilados = [
-        {
-            img: 'https://courier-images-prod.imgix.net/produc_variant/00008601_94a3137c-b179-4caa-b78b-ea0620ddd897.jpg?auto=compress,format&fit=max&w=undefined&h=undefined&dpr=2'
-        },
-        {
-            img: 'https://courier-images-prod.imgix.net/product/00009518_97115052-d9fc-46c3-bc39-33b4cec15cd5.jpg?auto=compress,format&fit=max&w=undefined&h=undefined&dpr=2'
-        },
-        {
-            img: 'https://courier-images-prod.imgix.net/produc_variant/00009256_443acb96-c3fe-46d6-a898-4c34723811fb.jpg?auto=compress,format&fit=max&w=undefined&h=undefined&dpr=2'
-        },
-        {
-            img: 'https://courier-images-prod.imgix.net/produc_variant/00009390_41a81567-23ba-46b8-a60d-cefca5e0f266.jpg?auto=compress,format&fit=max&w=undefined&h=undefined&dpr=2'
-        },
-        {
-            img: 'https://courier-images-prod.imgix.net/produc_variant/00011951_16eb11b3-43dd-467e-a53f-739c90b7bffc.jpg?auto=compress,format&fit=max&w=undefined&h=undefined&dpr=2'
-        },
-        {
-            img: 'https://courier-images-prod.imgix.net/produc_variant/00012091_8741402d-b440-45d5-af48-40dd65968b50.jpg?auto=compress,format&fit=max&w=undefined&h=undefined&dpr=2'
-        },
-        {
-            img: 'https://courier-images-prod.imgix.net/produc_variant/00010649_4e2c03f3-b88a-4c9e-bd06-6cf3e8c76fe2.jpg?auto=compress,format&fit=max&w=undefined&h=undefined&dpr=2'
-        },
-        {
-            img: 'https://courier-images-prod.imgix.net/product/00009535_44ee9903-1ddb-4a29-ad52-4b5b579bc702.jpg?auto=compress,format&fit=max&w=undefined&h=undefined&dpr=2'
-        },
-    ]
+    // arrayDestilados = [
+    //     {
+    //         img: 'https://courier-images-prod.imgix.net/produc_variant/00008601_94a3137c-b179-4caa-b78b-ea0620ddd897.jpg?auto=compress,format&fit=max&w=undefined&h=undefined&dpr=2'
+    //     },
+    //     {
+    //         img: 'https://courier-images-prod.imgix.net/product/00009518_97115052-d9fc-46c3-bc39-33b4cec15cd5.jpg?auto=compress,format&fit=max&w=undefined&h=undefined&dpr=2'
+    //     },
+    //     {
+    //         img: 'https://courier-images-prod.imgix.net/produc_variant/00009256_443acb96-c3fe-46d6-a898-4c34723811fb.jpg?auto=compress,format&fit=max&w=undefined&h=undefined&dpr=2'
+    //     },
+    //     {
+    //         img: 'https://courier-images-prod.imgix.net/produc_variant/00009390_41a81567-23ba-46b8-a60d-cefca5e0f266.jpg?auto=compress,format&fit=max&w=undefined&h=undefined&dpr=2'
+    //     },
+    //     {
+    //         img: 'https://courier-images-prod.imgix.net/produc_variant/00011951_16eb11b3-43dd-467e-a53f-739c90b7bffc.jpg?auto=compress,format&fit=max&w=undefined&h=undefined&dpr=2'
+    //     },
+    //     {
+    //         img: 'https://courier-images-prod.imgix.net/produc_variant/00012091_8741402d-b440-45d5-af48-40dd65968b50.jpg?auto=compress,format&fit=max&w=undefined&h=undefined&dpr=2'
+    //     },
+    //     {
+    //         img: 'https://courier-images-prod.imgix.net/produc_variant/00010649_4e2c03f3-b88a-4c9e-bd06-6cf3e8c76fe2.jpg?auto=compress,format&fit=max&w=undefined&h=undefined&dpr=2'
+    //     },
+    //     {
+    //         img: 'https://courier-images-prod.imgix.net/product/00009535_44ee9903-1ddb-4a29-ad52-4b5b579bc702.jpg?auto=compress,format&fit=max&w=undefined&h=undefined&dpr=2'
+    //     },
+    // ]
 
-    const arrayVinho = [
+    arrayVinho = [
         { img: 'https://courier-images-prod.imgix.net/produc_variant/00012715_90b41540-b0ee-408a-a491-06d8f0ea983c.jpg?auto=compress,format&fit=max&w=undefined&h=200&dpr=2' },
         { img: 'https://courier-images-prod.imgix.net/produc_variant/00012803_facb19f0-30ea-4275-98a7-8b1ad03c38bd.jpg?auto=compress,format&fit=max&w=undefined&h=200&dpr=2' },
         { img: 'https://courier-images-prod.imgix.net/produc_variant/00012759_dba07155-cb53-4d59-ba7c-4fd531cd51a2.jpg?auto=compress,format&fit=max&w=undefined&h=200&dpr=2' },
@@ -51,7 +134,7 @@ export default function catalogo(props) {
         { img: 'https://courier-images-prod.imgix.net/produc_variant/00010938_7b1671a6-4ef6-4e2e-aef1-a6184f46641b.jpg?auto=compress,format&fit=max&w=undefined&h=200&dpr=2' }
     ]
 
-    const arrayPetisco = [
+    arrayPetisco = [
         { img: 'https://courier-images-prod.imgix.net/product/00009414_91d2e756-8b3b-4363-ba91-2c8c8b82eeef.jpg?auto=compress,format&fit=max&w=undefined&h=200&dpr=2' },
         { img: 'https://courier-images-prod.imgix.net/produc_variant/00009236_7b33143c-2fa2-4f30-acb1-d0d2e0fb68e7.jpg?auto=compress,format&fit=max&w=undefined&h=200&dpr=2' },
         { img: 'https://courier-images-prod.imgix.net/produc_variant/9638_0c38d13e-1f37-4bd4-b0b9-c0ba77e4bb92.jpg?auto=compress,format&fit=max&w=undefined&h=200&dpr=2' },
@@ -61,7 +144,7 @@ export default function catalogo(props) {
     ]
 
 
-    const arraySemAlcool = [
+    arraySemAlcool = [
         {
             img: 'https://courier-images-prod.imgix.net/produc_variant/00008601_94a3137c-b179-4caa-b78b-ea0620ddd897.jpg?auto=compress,format&fit=max&w=undefined&h=undefined&dpr=2'
         },
@@ -87,88 +170,91 @@ export default function catalogo(props) {
             img: 'https://courier-images-prod.imgix.net/produc_variant/00010985_5db7dd10-daad-4963-81f1-913e307f40bf.jpg?auto=compress,format&fit=max&w=undefined&h=200&dpr=2'
         },
     ]
-    return (
-        <ScrollView>
-            <View style={styles.container}>
-                <Text style={{ fontSize: 30, fontWeight: 'bold', marginTop: 40, marginBottom: 5 }}>Delivery de Bebidas</Text>
-                <Text style={styles.title}>Cervejas</Text>
-                <ScrollView
-                    style={styles.divisoria}
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}>
-                    {arrayCerveja.map((e, i) => (
-                        <View key={i} style={{ alignItems: 'center' }}>
+
+    render() {
+        return (
+            <ScrollView>
+                <View style={styles.container}>
+                    <Text style={{ fontSize: 30, fontWeight: 'bold', marginTop: 40, marginBottom: 5 }}>Delivery de Bebidas</Text>
+                    <Text style={styles.title}>Cervejas</Text>
+                    <ScrollView
+                        style={styles.divisoria}
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}>
+                        {this.arrayCerveja.map((e, i) => (
+                            <View key={i} style={{ alignItems: 'center' }}>
+                                <TouchableOpacity onPress={() => navigation.navigate('produto')}>
+                                    <Image source={{ uri: (e.img) }}
+                                        style={styles.image} />
+                                    <Text style={styles.nome}>Nome</Text>
+                                    <Text style={styles.preco}>Preço R$</Text>
+                                </TouchableOpacity>
+                            </View>
+                        ))}
+                    </ScrollView>
+
+                    <Text style={styles.title}>Destilados</Text>
+                    <ScrollView
+                        style={styles.divisoria}
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}>
+                        {this.state.arrayDestilados.map((e, i) => (
+                            <TouchableOpacity onPress={() => navigation.navigate('produto')}>
+                                <Image source={{ uri: (e.imagem) }}
+                                    style={styles.image} />
+                                <Text style={styles.nome}>{e.descricao}</Text>
+                                <Text style={styles.preco}>R$ {e.preco}</Text>
+                            </TouchableOpacity>
+                        ))}
+                    </ScrollView>
+                    <Text style={styles.title}>Vinhos</Text>
+                    <ScrollView
+                        style={styles.divisoria}
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}>
+                        {this.arrayVinho.map((e, i) => (
                             <TouchableOpacity onPress={() => navigation.navigate('produto')}>
                                 <Image source={{ uri: (e.img) }}
                                     style={styles.image} />
                                 <Text style={styles.nome}>Nome</Text>
                                 <Text style={styles.preco}>Preço R$</Text>
                             </TouchableOpacity>
-                        </View>
-                    ))}
-                </ScrollView>
+                        ))}
+                    </ScrollView >
 
-                <Text style={styles.title}>Destilados</Text>
-                <ScrollView
-                    style={styles.divisoria}
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}>
-                    {arrayDestilados.map((e, i) => (
-                        <TouchableOpacity onPress={() => navigation.navigate('produto')}>
-                            <Image source={{ uri: (e.img) }}
-                                style={styles.image} />
-                            <Text style={styles.nome}>Nome</Text>
-                            <Text style={styles.preco}>Preço R$</Text>
-                        </TouchableOpacity>
-                    ))}
-                </ScrollView>
-                <Text style={styles.title}>Vinhos</Text>
-                <ScrollView
-                    style={styles.divisoria}
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}>
-                    {arrayVinho.map((e, i) => (
-                        <TouchableOpacity onPress={() => navigation.navigate('produto')}>
-                            <Image source={{ uri: (e.img) }}
-                                style={styles.image} />
-                            <Text style={styles.nome}>Nome</Text>
-                            <Text style={styles.preco}>Preço R$</Text>
-                        </TouchableOpacity>
-                    ))}
-                </ScrollView >
-
-                <Text style={styles.title}>Sem Álcool</Text>
-                <ScrollView
-                    style={styles.divisoria}
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}>
-                    {arraySemAlcool.map((e, i) => (
-                        <TouchableOpacity onPress={() => navigation.navigate('produto')}>
-                            <Image source={{ uri: (e.img) }}
-                                style={styles.image} />
-                            <Text style={styles.nome}>Nome</Text>
-                            <Text style={styles.preco}>Preço R$</Text>
-                        </TouchableOpacity>
-                    ))}
-                </ScrollView>
-                <Text style={styles.title}>Petiscos</Text>
-                <ScrollView
-                    style={styles.divisoria}
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}>
-                    {arrayPetisco.map((e, i) => (
-                        <TouchableOpacity onPress={() => navigation.navigate('produto')}>
-                            <Image source={{ uri: (e.img) }}
-                                style={styles.image} />
-                            <Text style={styles.nome}>Nome</Text>
-                            <Text style={styles.preco}>Preço R$</Text>
-                        </TouchableOpacity>
-                    ))}
-                </ScrollView>
-                <Menu {...props} />
-            </View >
-        </ScrollView>
-    );
+                    <Text style={styles.title}>Sem Álcool</Text>
+                    <ScrollView
+                        style={styles.divisoria}
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}>
+                        {this.arraySemAlcool.map((e, i) => (
+                            <TouchableOpacity onPress={() => navigation.navigate('produto')}>
+                                <Image source={{ uri: (e.img) }}
+                                    style={styles.image} />
+                                <Text style={styles.nome}>Nome</Text>
+                                <Text style={styles.preco}>Preço R$</Text>
+                            </TouchableOpacity>
+                        ))}
+                    </ScrollView>
+                    <Text style={styles.title}>Petiscos</Text>
+                    <ScrollView
+                        style={styles.divisoria}
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}>
+                        {this.arrayPetisco.map((e, i) => (
+                            <TouchableOpacity onPress={() => navigation.navigate('produto')}>
+                                <Image source={{ uri: (e.img) }}
+                                    style={styles.image} />
+                                <Text style={styles.nome}>Nome</Text>
+                                <Text style={styles.preco}>Preço R$</Text>
+                            </TouchableOpacity>
+                        ))}
+                    </ScrollView>
+                    <Menu {...this.props} />
+                </View >
+            </ScrollView>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -215,3 +301,4 @@ const styles = StyleSheet.create({
     }
 
 });
+export default catalogo;
