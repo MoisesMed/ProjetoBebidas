@@ -1,7 +1,9 @@
 import React from 'react';
-import { Text, View, TextInput, ScrollView, TouchableOpacity, Button, Image } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, Button, Image, FlatList } from 'react-native';
 import styles from './styleCarrinho';
-import Menu from '../../components/Menu'
+import Menu from '../../components/Menu';
+import Misc from '../../components/Misc';
+import firestore from '@react-native-firebase/firestore';
 
 class carrinho extends React.Component {
 
@@ -14,54 +16,138 @@ class carrinho extends React.Component {
             logradouro: '',
             bairro: '',
             complemento: '',
-            numero: ''
+            numero: '',
+            refDB: firestore().collection('pedido'),
+            arrayCarrinho: []
         }
+
+        this.obterCarrinhoAtual();
+    }
+
+    obterObjeto(produto, descricao, quantidade, preco, imagem) {
+        const objeto = {
+            'produto': produto,
+            'descricao': descricao,
+            'quantidade': quantidade,
+            'preco': preco,
+            'imagem': imagem
+        }
+        return objeto;
+    }
+
+    async obterCarrinhoAtual() {
+        const arrCarrinho = [];
+        await firestore().collection("carrinho").get()
+            .then(querySnapshot => {
+                querySnapshot.docs.forEach(doc => {
+                    arrCarrinho.push(this.obterObjeto(doc.data().produto.id, doc.data().descricao,
+                        doc.data().quantidade, doc.data().preco, doc.data().imagem));
+                });
+            });
+        this.setState({ arrayCarrinho: arrCarrinho });
     }
 
 
-    buscarCEP = () => {
+    async buscarCEP() {
         this.setState({ logradouro: '' });
         this.setState({ bairro: '' });
         this.setState({ complemento: '' });
         this.setState({ numero: '' });
 
-        fetch(`https://viacep.com.br/ws/${this.state.cep}/json`)
-            .then(resposta => resposta.json())
-            .then(data => {
-                console.log(data);
-                this.setState({ dados: data })
-                this.setState({ logradouro: data.logradouro });
-                this.setState({ bairro: data.bairro });
-                this.setState({ complemento: data.complemento });
-            })
-            .catch(erro => { console.log(erro) })
+        if (this.state.cep != '') {
+            fetch(`https://viacep.com.br/ws/${this.state.cep}/json`)
+                .then(resposta => resposta.json())
+                .then(data => {
+                    this.setState({ dados: data })
+                    this.setState({ logradouro: data.logradouro });
+                    this.setState({ bairro: data.bairro });
+                    this.setState({ complemento: data.complemento });
+                })
+                .catch(erro => { Misc.showToast(erro) })
+        }
     };
 
-    // const arrayPedido = [{
-    //     img: 'https://prod.liveshare.vsengsaas.visualstudio.com/join?56B7954FB7DAD0EB054FA27C1E1A22580430',
-    //     nome: 'heineken',
-    //     preco: '2.90',
-    //     quant: '1'
-    // },
-    // {
-    //     img: 'https://courier-images-prod.imgix.net/produc_variant/00008601_94a3137c-b179-4caa-b78b-ea0620ddd897.jpg?auto=compress,format&fit=max&w=undefined&h=undefined&dpr=2',
-    //     nome: 'teste',
-    //     preco: '3.50',
-    //     quant: '3'
-    // },
-    // {
-    //     img: 'https://courier-images-prod.imgix.net/produc_variant/00008601_94a3137c-b179-4caa-b78b-ea0620ddd897.jpg?auto=compress,format&fit=max&w=undefined&h=undefined&dpr=2',
-    //     nome: 'teste',
-    //     preco: '3.50',
-    //     quant: '2'
-    // },
-    // {
-    //     img: 'https://courier-images-prod.imgix.net/produc_variant/00008601_94a3137c-b179-4caa-b78b-ea0620ddd897.jpg?auto=compress,format&fit=max&w=undefined&h=undefined&dpr=2',
-    //     nome: 'teste',
-    //     preco: '3.50',
-    //     quant: '3'
-    // },
-    // ]
+    obterItemLista(item) {
+        return (
+            <View style={{ alignItems: 'center', flexDirection: 'row', paddingTop: 15 }}>
+                <Image source={{ uri: (item.imagem) }} style={styles.image} />
+                <Text>{item.descricao}</Text>
+                <Text style={{ paddingLeft: 20 }}>R$ {item.preco} </Text>
+                <Text style={{ paddingLeft: 20 }}>Quant: {item.quantidade} </Text>
+            </View>
+        )
+    }
+
+    obterValorTotalPedido() {
+        let valorTotal = 0.0;
+        for (let index = 0; index < this.state.arrayCarrinho.length; index++) {
+            const item = this.state.arrayCarrinho[index];
+            valorTotal = valorTotal + (item.quantidade * item.preco);
+        }
+        return valorTotal;
+    }
+
+    insereObjeto() {
+        const objeto = {
+            'total': this.obterValorTotalPedido(),
+            'carrinho': this.state.arrayCarrinho,
+            'endereco': this.state.dados
+        }
+        return objeto;
+    }
+
+    validarCamposObrigatorios() {
+        if (this.state.cep === '') {
+            Misc.showToast('Necessário informar o CEP!');
+            return false;
+        }
+
+        if (this.state.logradouro === '') {
+            Misc.showToast('Necessário informar o Logradouro!');
+            return false;
+        }
+
+        if (this.state.bairro === '') {
+            Misc.showToast('Necessário informar o Bairro!');
+            return false;
+        }
+
+        if (this.state.numero === '') {
+            Misc.showToast('Necessário informar o Numero!');
+            return false;
+        }
+
+        return true;
+    }
+
+    async apagarCarrinho() {
+        await firestore().collection("carrinho").get()
+            .then(querySnapshot => {
+                querySnapshot.docs.forEach(doc => {
+                    doc.ref.delete();
+                });
+            });
+    }
+
+    async finalizarPedido() {
+        if (this.validarCamposObrigatorios()) {
+            this.state.refDB
+                .add(this.insereObjeto())
+                .then((res) => {
+                    this.apagarCarrinho();
+                    Misc.showToast('Pedido Finalizado');
+                    this.redirecionaHome();
+                })
+                .catch((err) => {
+                    Misc.showToast('Erro ao adicionar: ' + err);
+                    console.error("Error found: ", err);
+                });
+        }
+    }
+
+    redirecionaHome() {
+        this.props.navigation.navigate('home');
+    }
 
     render() {
         return (
@@ -75,7 +161,7 @@ class carrinho extends React.Component {
                     <View style={{ flexDirection: 'row', marginBottom: 5, }}>
                         <TextInput style={{ marginLeft: 15, backgroundColor: 'white', width: 100, borderColor: '#4EBFFF' }} value={this.state.cep} onChangeText={cep => { this.setState({ cep }) }}></TextInput>
                         <TouchableOpacity style={{ marginLeft: 15, backgroundColor: '#4EBFFF', width: 110, justifyContent: 'center', alignItems: 'center' }}
-                            onPress={this.buscarCEP}>
+                            onPress={() => this.buscarCEP()}>
                             <Text>Consultar CEP</Text>
                         </TouchableOpacity>
                     </View>
@@ -84,7 +170,7 @@ class carrinho extends React.Component {
                     <Text style={{ marginLeft: 15 }}>Bairro</Text>
                     <TextInput style={styles.Entradas} value={this.state.bairro} onChangeText={bairro => { this.setState({ bairro }) }}></TextInput>
                     <Text style={{ marginLeft: 15, marginBottom: 5 }}>Numero</Text>
-                    <TextInput style={{ marginLeft: 15, backgroundColor: 'white', width: 100, borderColor: '#4EBFFF', marginBottom: 5 }}></TextInput>
+                    <TextInput style={{ marginLeft: 15, backgroundColor: 'white', width: 100, borderColor: '#4EBFFF', marginBottom: 5 }} value={this.state.numero} onChangeText={numero => { this.setState({ numero }) }}></TextInput>
                     <Text style={{ marginLeft: 15 }}>Complemento</Text>
                     <TextInput style={styles.Entradas} value={this.state.complemento} onChangeText={complemento => { this.setState({ complemento }) }}></TextInput>
                 </View>
@@ -92,19 +178,13 @@ class carrinho extends React.Component {
                     <View style={{ alignItems: 'center', backgroundColor: '#4EBFFF' }}>
                         <Text style={{ fontWeight: "bold", fontSize: 18, color: 'white' }}>Itens da Compra</Text>
                     </View>
-                    <ScrollView>
-                        {/* {arrayPedido.map((e, i) => (
-                        <View key={i} style={{ alignItems: 'center', flexDirection: 'row', paddingTop: 15 }}>
-                            <Image source={{ uri: (e.img) }} style={styles.image} />
-                            <Text>{e.nome}</Text>
-                            <Text style={{ paddingLeft: 20 }}>R$ {e.preco}</Text>
-                            <Text style={{ paddingLeft: 20 }}>Quant: {e.quant}</Text>
-                        </View>
-                    ))} */}
-
-                    </ScrollView>
+                    <FlatList
+                        style={styles.divisoria}
+                        data={this.state.arrayCarrinho}
+                        renderItem={({ item }) => this.obterItemLista(item)}
+                        keyExtractor={(item, index) => index.toString()} />
                     <View style={styles.boxBtn}>
-                        <TouchableOpacity style={styles.botaoConfir}>
+                        <TouchableOpacity style={styles.botaoConfir} onPress={() => this.finalizarPedido()}>
                             <Text>Confirmar</Text>
                         </TouchableOpacity>
                     </View>

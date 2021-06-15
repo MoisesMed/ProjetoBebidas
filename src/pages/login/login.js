@@ -2,24 +2,30 @@ import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, Button, TextInput, TouchableOpacity } from 'react-native';
 import auth from '@react-native-firebase/auth';
-//import firebase from '@react-native-firebase';
+import Misc from '../../components/Misc';
 
 export default function login({ navigation }) {
  
     const [email, onChangeEmail] = React.useState(null);
     const [password, onChangePassword] = React.useState(null);
-    const [autenticado, onChangeAutenticado] = React.useState(false);
       
      async function login() {
-        //const { email, password } = this.state;
-        try{
-            const user = await auth().signInWithEmailAndPassword(email,password);
-            //this.setState({autenticado: true});
-            console.log(user);
+        auth().signInWithEmailAndPassword(email,password)
+        .then(()=>{
             navigation.navigate('home');
-        }   catch(erro){
-            console.log(erro);
-        }  
+        })
+        .catch(error => {
+            if (error.code === "auth/invalid-email") {
+                Misc.showToast("E-mail inválido");
+            } else if (error.code === 'auth/user-not-found') {                
+                Misc.showToast('Usuário inexistente');
+            } else if (error.code === 'auth/wrong-password') {                
+                Misc.showToast('Senha incorreta');
+            } else {
+                console.log(error.code);
+                Misc.showToast(error.code);
+            }
+        })
       }
 
     return (
@@ -37,7 +43,7 @@ export default function login({ navigation }) {
                 <TextInput style={{ width: 200, borderRadius: 5, backgroundColor: "white", marginTop: 6 }} value={password} onChangeText={onChangePassword} />
             </View>
             <View style={styles.containerBottom}>
-                <Button onPress={() => login()} //{() => navigation.navigate('home')}
+                <Button onPress={() => login()}
                     title="Login"
                     style={{ fontSize: 10 }}
                 />
