@@ -8,16 +8,18 @@
 
 <h3>Tecnologias  usadas no desenvolvimento</h3>
 <ul>
+    <li>React Native</li>
     <li>JavaScrip</li>
     <li>CSS</li>
-    <li>React Native</li>
+    <li>FireBase</li>
     <li>Styled Components</li>
     <li>Material UI</li>
-</ul>
+</ul>![Bebidas1](https://user-images.githubusercontent.com/43209743/123893743-58b8d600-d933-11eb-9fb0-b03d1ec7927b.png)
+![Bebidas2](https://user-images.githubusercontent.com/43209743/123893760-5c4c5d00-d933-11eb-88b1-b6719e138dd4.png)
+
 
 <hr>
 
 
-[E-Drink.pdf](https://github.com/MoisesMed/ProjetoBebidas/files/6737604/E-Drink.pdf)
 
 
