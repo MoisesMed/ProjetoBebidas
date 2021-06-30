@@ -18,6 +18,6 @@
 <hr>
 
 
-<img src="https://user-images.githubusercontent.com/43209743/116278910-52548500-a75d-11eb-9cd0-ee4105d4cacc.png" />
+[E-Drink.pdf](https://github.com/MoisesMed/ProjetoBebidas/files/6737604/E-Drink.pdf)
 
 
