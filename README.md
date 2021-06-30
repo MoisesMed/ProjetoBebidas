@@ -9,7 +9,7 @@
 <h3>Tecnologias  usadas no desenvolvimento</h3>
 <ul>
     <li>React Native</li>
-    <li>JavaScrip</li>
+    <li>JavaScript</li>
     <li>CSS</li>
     <li>FireBase</li>
     <li>Styled Components</li>
