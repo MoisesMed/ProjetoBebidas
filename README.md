@@ -1,5 +1,5 @@
 <h2>O que é este projeto?</h2>
-<p>Aplicativo feito em 2 dias para uma prova da faculdade.</p>
+<p>Aplicativo feito em 2 aulas para uma prova da faculdade.</p>
 
 
 <h2>Sobre o desenvolvimento</h2>
